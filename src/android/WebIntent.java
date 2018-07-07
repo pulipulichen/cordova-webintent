@@ -55,7 +55,7 @@ public class WebIntent extends CordovaPlugin {
                 
                 // FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", createImageFile());
                 Uri uri = obj.has("url") ? resourceApi.remapUri(Uri.parse(obj.getString("url"))) : null;
-                Uri data = obj.has("data") ? FileProvider.getUriForFile(cordova.getActivity(), cordova.getActivity().getPackageName() + ".fileprovider", new File(obj.getString("data"))) : null;
+                Uri data = obj.has("data") ? FileProvider.getUriForFile(this.cordova.getActivity(), this.cordova.getActivity().getPackageName() + ".fileprovider", new File(obj.getString("data"))) : null;
                 JSONObject extras = obj.has("extras") ? obj.getJSONObject("extras") : null;
                 Map<String, String> extrasMap = new HashMap<String, String>();
 
@@ -173,10 +173,12 @@ public class WebIntent extends CordovaPlugin {
         if (uri != null) {
             i = new Intent(action, uri);
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            this.cordova.getActivity().grantUriPermission(this.cordova.getActivity().getPackageName(), uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         else if (data != null) {
             i = new Intent(action, data);
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            this.cordova.getActivity().grantUriPermission(this.cordova.getActivity().getPackageName(), data, Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
 
         if (type != null && uri != null) {
@@ -193,6 +195,7 @@ public class WebIntent extends CordovaPlugin {
         if (data != null) {
             i.setData(data);
         }
+        
         
         for (Map.Entry<String, String> entry : extras.entrySet()) {
             final String key = entry.getKey();
