@@ -184,7 +184,7 @@ public class WebIntent extends CordovaPlugin {
             i.setDataAndType(uri, type); //Fix the crash problem with android 2.3.6
         }
         if (type != null && data != null) {
-            i.setDataAndType(uri, data); //Fix the crash problem with android 2.3.6
+            i.setDataAndType(data, type); //Fix the crash problem with android 2.3.6
         } else {
             if (type != null) {
                 i.setType(type);
