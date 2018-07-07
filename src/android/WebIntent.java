@@ -167,23 +167,30 @@ public class WebIntent extends CordovaPlugin {
     }
 
     void startActivity(String action, Uri uri, String type, Uri data, Map<String, String> extras) {
-        Intent i = uri != null ? new Intent(action, uri) : new Intent(action);
+        Intent i;
+        if (uri != null) {
+            i = new Intent(action, uri);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        else if (data != null) {
+            i = new Intent(action, data);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        else {
+            new Intent(action)
+        }
 
         if (type != null && uri != null) {
-            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             i.setDataAndType(uri, type); //Fix the crash problem with android 2.3.6
+        }
+        if (type != null && data != null) {
+            i.setDataAndType(uri, data); //Fix the crash problem with android 2.3.6
         } else {
-            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             if (type != null) {
                 i.setType(type);
             }
         }
         
-        if (data != null) {
-            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            i.setData(data);
-        }
-
         for (Map.Entry<String, String> entry : extras.entrySet()) {
             final String key = entry.getKey();
             final String value = entry.getValue();
