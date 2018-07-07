@@ -177,7 +177,7 @@ public class WebIntent extends CordovaPlugin {
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         else {
-            new Intent(action)
+            new Intent(action);
         }
 
         if (type != null && uri != null) {
