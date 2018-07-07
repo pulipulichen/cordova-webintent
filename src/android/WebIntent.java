@@ -52,8 +52,8 @@ public class WebIntent extends CordovaPlugin {
                 final CordovaResourceApi resourceApi = webView.getResourceApi();
                 JSONObject obj = args.getJSONObject(0);
                 String type = obj.has("type") ? obj.getString("type") : null;
-                String data = obj.has("data") ? obj.getString("data") : null;
                 Uri uri = obj.has("url") ? resourceApi.remapUri(Uri.parse(obj.getString("url"))) : null;
+                Uri data = obj.has("data") ? resourceApi.remapUri(Uri.parse(obj.getString("data"))) : null;
                 JSONObject extras = obj.has("extras") ? obj.getJSONObject("extras") : null;
                 Map<String, String> extrasMap = new HashMap<String, String>();
 
@@ -166,21 +166,22 @@ public class WebIntent extends CordovaPlugin {
         }
     }
 
-    void startActivity(String action, Uri uri, String type, String data, Map<String, String> extras) {
+    void startActivity(String action, Uri uri, String type, Uri data, Map<String, String> extras) {
         Intent i = uri != null ? new Intent(action, uri) : new Intent(action);
 
         if (type != null && uri != null) {
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             i.setDataAndType(uri, type); //Fix the crash problem with android 2.3.6
         } else {
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             if (type != null) {
                 i.setType(type);
             }
         }
         
         if (data != null) {
-            final CordovaResourceApi resourceApi = webView.getResourceApi();
-            Uri dataUri = resourceApi.remapUri(Uri.parse(data));
-            i.setData(dataUri);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            i.setData(data);
         }
 
         for (Map.Entry<String, String> entry : extras.entrySet()) {
@@ -201,6 +202,8 @@ public class WebIntent extends CordovaPlugin {
                 i.putExtra(key, value);
             }
         }
+        
+        
         ((CordovaActivity)this.cordova.getActivity()).startActivity(i);
     }
 
