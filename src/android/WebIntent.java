@@ -167,7 +167,7 @@ public class WebIntent extends CordovaPlugin {
     }
 
     void startActivity(String action, Uri uri, String type, Uri data, Map<String, String> extras) {
-        Intent i;
+        Intent i = new Intent(action);
         if (uri != null) {
             i = new Intent(action, uri);
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -175,9 +175,6 @@ public class WebIntent extends CordovaPlugin {
         else if (data != null) {
             i = new Intent(action, data);
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        }
-        else {
-            new Intent(action);
         }
 
         if (type != null && uri != null) {
