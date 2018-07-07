@@ -52,8 +52,10 @@ public class WebIntent extends CordovaPlugin {
                 final CordovaResourceApi resourceApi = webView.getResourceApi();
                 JSONObject obj = args.getJSONObject(0);
                 String type = obj.has("type") ? obj.getString("type") : null;
+                
+                // FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", createImageFile());
                 Uri uri = obj.has("url") ? resourceApi.remapUri(Uri.parse(obj.getString("url"))) : null;
-                Uri data = obj.has("data") ? resourceApi.remapUri(Uri.parse(obj.getString("data"))) : null;
+                Uri data = obj.has("data") ? resourceApi.remapUri(FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(obj.getString("data")))) : null;
                 JSONObject extras = obj.has("extras") ? obj.getJSONObject("extras") : null;
                 Map<String, String> extrasMap = new HashMap<String, String>();
 
