@@ -188,6 +188,10 @@ public class WebIntent extends CordovaPlugin {
             }
         }
         
+        if (data != null) {
+            i.setData(data);
+        }
+        
         for (Map.Entry<String, String> entry : extras.entrySet()) {
             final String key = entry.getKey();
             final String value = entry.getValue();
