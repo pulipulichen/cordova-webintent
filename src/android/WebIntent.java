@@ -178,7 +178,9 @@ public class WebIntent extends CordovaPlugin {
         }
         
         if (data != null) {
-            i.setData(data);
+            final CordovaResourceApi resourceApi = webView.getResourceApi();
+            Uri dataUri = resourceApi.remapUri(Uri.parse(data));
+            i.setData(dataUri);
         }
 
         for (Map.Entry<String, String> entry : extras.entrySet()) {
