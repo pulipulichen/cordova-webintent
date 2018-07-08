@@ -221,7 +221,7 @@ public class WebIntent extends CordovaPlugin {
                 i.putExtra(Intent.EXTRA_EMAIL, new String[] { value });
             } else if (key.equals("dtstart") || key.equals("beginTime")) {
                 // Allows adding the email address of the receiver.
-                i.putExtra(key, Long.parseLong("value") );
+                i.putExtra(key, Long.parseLong(value) );
             } else {
                 i.putExtra(key, value);
             }
