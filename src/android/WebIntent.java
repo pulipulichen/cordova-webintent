@@ -223,59 +223,66 @@ public class WebIntent extends CordovaPlugin {
                 // Allows adding the email address of the receiver.
                 i.putExtra(Intent.EXTRA_EMAIL, new String[] { value });
             } else if (key.equals("calendar_id")) {
-                // Allows adding the email address of the receiver.
+                /*
 				if (Build.VERSION.SDK_INT >= 15) {
 					key = CalendarContract.Events.CALENDAR_ID;
 				}
 				else {
 					key = "calendar_id";
 				}
+				*/
                 i.putExtra(key, Integer.parseInt(value) );
 			} else if (key.equals("dtstart") || key.equals("beginTime")) {
-                // Allows adding the email address of the receiver.
+                /*
 				if (Build.VERSION.SDK_INT >= 15) {
 					key = CalendarContract.Events.DTSTART;
 				}
 				else {
 					key = "beginTime";
 				}
+				*/
                 i.putExtra(key, Long.parseLong(value) );
 			} else if (key.equals("dtend") || key.equals("endTime")) {
-                // Allows adding the email address of the receiver.
+                /*
 				if (Build.VERSION.SDK_INT >= 15) {
 					key = CalendarContract.Events.DTEND;
 				}
 				else {
 					key = "endTime";
 				}
+				*/
                 i.putExtra(key, Long.parseLong(value) );
 			} else if (key.equals("allDay")) {
-                // Allows adding the email address of the receiver.
+                /*
 				if (Build.VERSION.SDK_INT >= 15) {
 					key = CalendarContract.Events.ALL_DAY;
 				}
 				else {
 					key = "allDay";
 				}
+				*/
                 i.putExtra(key, Integer.parseInt(value) );
 			} else if (key.equals("eventStatus") || key.equals("status")) {
-                // Allows adding the email address of the receiver.
+                /*
 				if (Build.VERSION.SDK_INT >= 15) {
 					key = CalendarContract.Events.STATUS;
 				}
 				else {
 					key = "status";
 				}
+				*/
                 i.putExtra(key, Integer.parseInt(value) );
 			} else if (key.equals("visibility")) {
                 i.putExtra(key, Integer.parseInt(value) );
 			} else if (key.equals("hasAlarm")) {
+				/*
 				if (Build.VERSION.SDK_INT >= 15) {
 					key = CalendarContract.Events.HAS_ALARM;
 				}
 				else {
 					key = "hasAlarm";
 				}
+				*/
                 i.putExtra(key, Integer.parseInt(value) );
             } else {
                 i.putExtra(key, value);
