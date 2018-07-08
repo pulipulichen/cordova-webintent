@@ -52,10 +52,11 @@ public class WebIntent extends CordovaPlugin {
                 final CordovaResourceApi resourceApi = webView.getResourceApi();
                 JSONObject obj = args.getJSONObject(0);
                 String type = obj.has("type") ? obj.getString("type") : null;
+                String aPackage = obj.has("package") ? obj.getString("package") : null;
                 
                 // FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", createImageFile());
                 Uri uri = obj.has("url") ? resourceApi.remapUri(Uri.parse(obj.getString("url"))) : null;
-                Uri data = obj.has("data") ? FileProvider.getUriForFile(this.cordova.getActivity(), this.cordova.getActivity().getPackageName() + ".fileprovider", new File(obj.getString("data"))) : null;
+                Uri data = obj.has("data") ? resourceApi.remapUri(Uri.parse(obj.getString("data"))) : null;
                 JSONObject extras = obj.has("extras") ? obj.getJSONObject("extras") : null;
                 Map<String, String> extrasMap = new HashMap<String, String>();
 
@@ -69,7 +70,7 @@ public class WebIntent extends CordovaPlugin {
                     }
                 }
 
-                startActivity(obj.getString("action"), uri, type, data, extrasMap);
+                startActivity(obj.getString("action"), uri, type, aPackage, data, extrasMap);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
                 return true;
             } else if ("hasExtra".equals(action)) {
@@ -168,7 +169,7 @@ public class WebIntent extends CordovaPlugin {
         }
     }
 
-    void startActivity(String action, Uri uri, String type, Uri data, Map<String, String> extras) {
+    void startActivity(String action, Uri uri, String type, String aPackage, Uri data, Map<String, String> extras) {
         Intent i = new Intent(action);
         if (uri != null) {
             i = new Intent(action, uri);
@@ -194,6 +195,9 @@ public class WebIntent extends CordovaPlugin {
         
         if (data != null) {
             i.setData(data);
+        }
+        if (aPackage != null) {
+            i.setPackage(aPackage);
         }
         
         
