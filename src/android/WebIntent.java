@@ -53,6 +53,7 @@ public class WebIntent extends CordovaPlugin {
                 JSONObject obj = args.getJSONObject(0);
                 String type = obj.has("type") ? obj.getString("type") : null;
                 String aPackage = obj.has("package") ? obj.getString("package") : null;
+                String category = obj.has("category") ? obj.getString("category") : null;
                 
                 // FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", createImageFile());
                 Uri uri = obj.has("url") ? resourceApi.remapUri(Uri.parse(obj.getString("url"))) : null;
@@ -70,7 +71,7 @@ public class WebIntent extends CordovaPlugin {
                     }
                 }
 
-                startActivity(obj.getString("action"), uri, type, aPackage, data, extrasMap);
+                startActivity(obj.getString("action"), uri, type, aPackage, category, data, extrasMap);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
                 return true;
             } else if ("hasExtra".equals(action)) {
@@ -169,7 +170,7 @@ public class WebIntent extends CordovaPlugin {
         }
     }
 
-    void startActivity(String action, Uri uri, String type, String aPackage, Uri data, Map<String, String> extras) {
+    void startActivity(String action, Uri uri, String type, String aPackage, String category, Uri data, Map<String, String> extras) {
         Intent i = new Intent(action);
         if (uri != null) {
             i = new Intent(action, uri);
@@ -198,6 +199,9 @@ public class WebIntent extends CordovaPlugin {
         }
         if (aPackage != null) {
             i.setPackage(aPackage);
+        }
+        if (category != null) {
+            i.addCategory(category);
         }
         
         
