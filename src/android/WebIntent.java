@@ -66,14 +66,8 @@ public class WebIntent extends CordovaPlugin {
                     JSONArray extraNames = extras.names();
                     for (int i = 0; i < extraNames.length(); i++) {
                         String key = extraNames.getString(i);
-                        if (key.equals("dtstart")) {
-                            long value = extras.getLong(key);
-                            extrasMap.put(key, value);
-                        }
-                        else {
-                            String value = extras.getString(key);
-                            extrasMap.put(key, value);
-                        }
+                        String value = extras.getString(key);
+                        extrasMap.put(key, value);
                     }
                 }
 
@@ -225,6 +219,9 @@ public class WebIntent extends CordovaPlugin {
             } else if (key.equals(Intent.EXTRA_EMAIL)) {
                 // Allows adding the email address of the receiver.
                 i.putExtra(Intent.EXTRA_EMAIL, new String[] { value });
+            } else if (key.equals("dtstart")) {
+                // Allows adding the email address of the receiver.
+                i.putExtra("dtstart", Long.parseLong("value") );
             } else {
                 i.putExtra(key, value);
             }
