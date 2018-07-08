@@ -209,7 +209,7 @@ public class WebIntent extends CordovaPlugin {
         
         
         for (Map.Entry<String, String> entry : extras.entrySet()) {
-            final String key = entry.getKey();
+            String key = entry.getKey();
             final String value = entry.getValue();
             // If type is text/html, the extra text must be sent as HTML.
             if (key.equals(Intent.EXTRA_TEXT) && "text/html".equals(type)) {
